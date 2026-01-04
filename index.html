@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>File Converter</title>
+  <title>PDF to Word Converter</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; background: #f0f8ff; }
+    input, button { padding: 10px; margin: 10px; font-size: 16px; }
+    #status { margin-top: 20px; font-weight: bold; }
+  </style>
 </head>
 <body>
   <h1>PDF to Word Converter</h1>
-  <input type="file" id="fileInput">
+  <input type="file" id="fileInput" accept=".pdf">
   <button onclick="convert()">Convert</button>
   <p id="status"></p>
 
   <script>
-    function convert() {
-      const file = document.getElementById('fileInput').files[0];
-      if (!file) { alert('Select a file first'); return; }
+    async function convert() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (!file) { alert('Select a PDF file first!'); return; }
+
       document.getElementById('status').innerText = 'Converting...';
-      // Real conversion would need a library or backend
-      setTimeout(() => {
-        document.getElementById('status').innerText = 'Conversion complete! (demo)';
-      }, 2000);
+
+      // Create form data to send to API
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Replace YOUR_API_KEY with your actual key
+      const response = await fetch('https://v2.convertapi.com/convert/pdf/to/docx?Secret=YOUR_API_KEY', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      // Download the converted file
+      const downloadUrl = result.Files[0].Url;
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = file.name.replace('.pdf', '.docx');
+      link.click();
+
+      document.getElementById('status').innerText = 'Conversion complete!';
     }
   </script>
 </body>
