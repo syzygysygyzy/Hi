@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NNNNNNNNNNNN</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f0f8ff;
-      color: #333;
-    }
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #0077cc;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #ff6600;
-    }
-    h1 {
-      margin-top: 50px;
-    }
-    p {
-      font-size: 18px;
-      margin: 20px 0;
-    }
-  </style>
+  <title>File Converter</title>
 </head>
 <body>
-  <nav>
-    <a href="index.html">H</a>
-    <a href="about.html">A</a>
-    <a href="contact.html">C</a>
-  </nav>
+  <h1>PDF to Word Converter</h1>
+  <input type="file" id="fileInput">
+  <button onclick="convert()">Convert</button>
+  <p id="status"></p>
 
-  <h1>SUP!</h1>
-  <p>I AM THE BEST.</p>
+  <script>
+    function convert() {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) { alert('Select a file first'); return; }
+      document.getElementById('status').innerText = 'Converting...';
+      // Real conversion would need a library or backend
+      setTimeout(() => {
+        document.getElementById('status').innerText = 'Conversion complete! (demo)';
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
